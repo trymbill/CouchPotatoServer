@@ -27,7 +27,9 @@ Page.Manage = new Class({
 
 			self.list = new MovieList({
 				'identifier': 'manage',
-				'status': 'done',
+				'filter': {
+					'release_status': 'done'
+				},
 				'actions': MovieActions,
 				'menu': [self.refresh_button, self.refresh_quick],
 				'on_empty_element': new Element('div.empty_manage').adopt(
@@ -88,7 +90,7 @@ Page.Manage = new Class({
 				'onComplete': function(json){
 					self.update_in_progress = true;
 
-					if(!json.progress){
+					if(!json || !json.progress){
 						clearInterval(self.progress_interval);
 						self.update_in_progress = false;
 						if(self.progress_container){
